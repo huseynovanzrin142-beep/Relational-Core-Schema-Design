@@ -11,7 +11,7 @@ As part of my professional growth in SQL, I have adopted a **"Structure-First"**
 ## 🖼️ Database Schema Diagram
 The following diagram illustrates the relational structure of the system, including table relationships and data constraints.
 
-![University Schema Diagram](./senin_faylinin_adi.png)
+![University Schema Diagram](./Academy_Diagram.png)
 
 ## 🛠️ Technical Highlights
 - **Relational Integrity:** Implemented through Foreign Key constraints across 9 interconnected tables.
