@@ -154,70 +154,145 @@ VALUES (2, 2)
 INSERT INTO GroupsCurators ([GroupId], [CuratorId]) 
 VALUES (3, 3)
 GO
-SELECT T.*, G.* 
-FROM Teachers AS T, Groups AS G
+SELECT *
+FROM Teachers AS T
+CROSS JOIN  Groups AS G
 GO
-SELECT F.[Name] 
-FROM Faculties AS F, Departments AS D 
-WHERE D.[FacultyId] = F.[Id] 
-AND D.[Financing] > F.[Financing]
+
+SELECT 
+    F.[Name] 
+FROM Faculties AS F
+INNER JOIN Departments AS D 
+    ON D.[FacultyId] = F.[Id] 
+WHERE 
+    D.[Financing] > F.[Financing]
 GO
-SELECT C.[Name], G.[Name] 
-FROM Curators AS C, GroupsCurators AS GC, Groups AS G 
-WHERE C.[Id] = GC.[CuratorId] 
-AND G.[Id] = GC.[GroupId]
+
+
+SELECT 
+    C.[Name],
+    G.[Name] 
+FROM Curators AS C
+INNER JOIN  GroupsCurators AS GC
+    ON C.[Id] = GC.[CuratorId] 
+INNER JOIN   Groups AS G 
+    ON G.[Id] = GC.[GroupId]
 GO
-SELECT T.[Name] 
-FROM Teachers AS T, Lectures AS L, GroupsLectures AS GL, Groups AS G 
-WHERE T.[Id] = L.[TeacherId] 
-AND L.[Id] = GL.[LectureId] 
-AND GL.[GroupId] = G.[Id] 
-AND G.[Name] = 'P107'
+
+
+SELECT 
+    T.[Name] 
+FROM Teachers AS T
+INNER JOIN Lectures AS L
+    ON T.[Id] = L.[TeacherId]   
+INNER JOIN GroupsLectures AS GL
+    ON L.[Id] = GL.[LectureId]
+INNER JOIN Groups AS G 
+    ON GL.[GroupId] = G.[Id] 
+WHERE
+    G.[Name] = 'P107'
 GO
-SELECT T.[Surname], F.[Name] 
-FROM Teachers AS T, Lectures AS L, GroupsLectures AS GL, Groups AS G, Departments AS D, Faculties AS F 
-WHERE T.[Id] = L.[TeacherId] 
-AND L.[Id] = GL.[LectureId] 
-AND GL.[GroupId] = G.[Id] 
-AND G.[DepartmentId] = D.[Id] 
-AND D.[FacultyId] = F.[Id]
+
+
+
+SELECT 
+    T.[Surname],
+    F.[Name] 
+FROM Teachers AS T
+INNER JOIN Lectures AS L
+    ON T.[Id] = L.[TeacherId] 
+INNER JOIN GroupsLectures AS GL
+    ON L.[Id] = GL.[LectureId] 
+INNER JOIN Groups AS G
+    ON GL.[GroupId] = G.[Id] 
+INNER JOIN Departments AS D
+    ON G.[DepartmentId] = D.[Id] 
+INNER JOIN Faculties AS F 
+    ON D.[FacultyId] = F.[Id]
 GO
-SELECT D.[Name], G.[Name] 
-FROM Departments AS D, Groups AS G 
-WHERE D.[Id] = G.[DepartmentId]
+
+
+SELECT 
+    D.[Name],
+    G.[Name] 
+FROM Departments AS D
+INNER JOIN Groups AS G 
+    ON D.[Id] = G.[DepartmentId]
 GO
-SELECT S.[Name] 
-FROM Subjects AS S, Lectures AS L, Teachers AS T 
-WHERE S.[Id] = L.[SubjectId] 
-AND L.[TeacherId] = T.[Id] 
-AND T.[Name] = 'Samantha' 
-AND T.[Surname] = 'Adams'
+
+
+
+SELECT 
+    S.[Name] 
+FROM Subjects AS S
+INNER JOIN Lectures AS L
+    ON S.[Id] = L.[SubjectId]
+INNER JOIN Teachers AS T 
+    ON L.[TeacherId] = T.[Id] 
+WHERE  
+    T.[Name] = 'Samantha' 
+    AND T.[Surname] = 'Adams'
 GO
-SELECT D.[Name] 
-FROM Departments AS D, Groups AS G, GroupsLectures AS GL, Lectures AS L, Subjects AS S 
-WHERE D.[Id] = G.[DepartmentId] 
-AND G.[Id] = GL.[GroupId] 
-AND GL.[LectureId] = L.[Id] 
-AND L.[SubjectId] = S.[Id] 
-AND S.[Name] = 'Database Theory'
+
+
+
+SELECT 
+    D.[Name] 
+FROM Departments AS D
+INNER JOIN Groups AS G
+    ON D.[Id] = G.[DepartmentId] 
+INNER JOIN GroupsLectures AS GL
+    ON G.[Id] = GL.[GroupId]
+INNER JOIN Lectures AS L
+    ON GL.[LectureId] = L.[Id]
+INNER JOIN Subjects AS S 
+    ON L.[SubjectId] = S.[Id] 
+WHERE 
+    S.[Name] = 'Database Theory'
 GO
-SELECT G.[Name] 
-FROM Groups AS G, Departments AS D, Faculties AS F 
-WHERE G.[DepartmentId] = D.[Id] 
-AND D.[FacultyId] = F.[Id] 
-AND F.[Name] = 'Computer Science'
+
+
+
+SELECT 
+    G.[Name] 
+FROM Groups AS G
+INNER JOIN Departments AS D
+    ON G.[DepartmentId] = D.[Id] 
+INNER JOIN Faculties AS F 
+    ON D.[FacultyId] = F.[Id]
+WHERE   
+    F.[Name] = 'Computer Science'
 GO
-SELECT G.[Name], F.[Name] 
-FROM Groups AS G, Departments AS D, Faculties AS F 
-WHERE G.[Year] = 5 
-AND G.[DepartmentId] = D.[Id] 
-AND D.[FacultyId] = F.[Id]
+
+
+SELECT 
+    G.[Name],
+    F.[Name] 
+FROM Groups AS G
+INNER JOIN Departments AS D
+    ON G.[DepartmentId] = D.[Id] 
+INNER JOIN Faculties AS F 
+    ON D.[FacultyId] = F.[Id]
+WHERE 
+    G.[Year] = 5 
 GO
-SELECT T.[Name], S.[Name], G.[Name] 
-FROM Teachers AS T, Lectures AS L, Subjects AS S, GroupsLectures AS GL, Groups AS G 
-WHERE T.[Id] = L.[TeacherId] 
-AND S.[Id] = L.[SubjectId] 
-AND L.[Id] = GL.[LectureId] 
-AND GL.[GroupId] = G.[Id] 
-AND L.[LectureRoom] = 'B103'
+
+
+
+
+SELECT 
+    T.[Name],
+    S.[Name],
+    G.[Name] 
+FROM Teachers AS T
+INNER JOIN Lectures AS L
+    ON T.[Id] = L.[TeacherId] 
+INNER JOIN Subjects AS S
+    ON S.[Id] = L.[SubjectId] 
+INNER JOIN GroupsLectures AS GL
+    ON L.[Id] = GL.[LectureId] 
+INNER JOIN Groups AS G 
+    ON GL.[GroupId] = G.[Id]
+WHERE 
+    L.[LectureRoom] = 'B103'
 GO
